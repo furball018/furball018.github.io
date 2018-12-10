@@ -18,14 +18,14 @@
         </div>
         <div class="container quien-pago">
             <h2 class="text-center mt-4">Quién pagó?</h2>
+            {{usedTypes}}
             <div class="row">
                 <div class="col">
                     <div class="row pr-4 pl-4 list-titles">
-                        <div class="col-1"></div>
-                        <div class="col-4">Nombre</div>
-                        <div class="col-4">Puso para</div>
-                        <div class="col-2 text-right">Gastó</div>
-                        <div class="col-1"></div>
+                        <div class="col-4 pl-0 pr-0">Nombre</div>
+                        <div class="col-4 pl-2 pr-2">Puso para</div>
+                        <div class="col-3 pl-2 pr-2 text-right">Gastó</div>
+                        <div class="col-1 pl-2 pr-2"></div>
 
                     </div>
                     <!-- QUIEN PAGÓ LIST -->
@@ -33,30 +33,20 @@
                         <transition-group name="quien-pago-list" enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft">
                             <li class="list-group-item" v-for="(persona, index) in quienesPagaron" :key="persona">
                                 <div class="row">
-                                    <div class="col-1">
-                                        <i class="material-icons mt-1">face</i>
+                                    <div class="col-4 pl-2 pr-2">
+                                        <input type="text" v-model="persona.name" @focus="$event.target.select()">
                                     </div>
-                                    <div class="col-4">
-                                        <input type="text" v-model="persona.name">
-                                    </div>
-                                    <div class="col-4">
-                                        <select name="type" v-model="persona.type">
-                                            <option value="select" disabled>Seleccionar</option>
-                                            <option value="bebida">Bebida</option>
-                                            <option value="alcohol">Alcohol</option>
-                                            <option value="comida">Comida</option>
-                                            <option value="snacks">Snacks</option>
-                                            <option value="carne">Carne</option>
-                                            <option value="entradas">Entradas</option>
-                                            <option value="transporte">Transporte</option>
-                                            <option value="otra-cosa">Otra cosa</option>
+                                    <div class="col-4 pl-2 pr-2">
+                                        <select name="type" v-model="persona.type" @change="calcUsedTypes">
+                                                <option value="select" disabled>Elegir</option>
+                                                <option v-for="type in types" :value="type">{{type}}</option>
                                         </select>
                                     </div>
-                                    <div class="col-2">
-                                        <input type="number" min="0" v-model.number="persona.total" class="currency currency-positive text-right">
+                                    <div class="col-3 pl-2 pr-2">
+                                        <input type="number" min="0" v-model.number="persona.total" class="currency currency-positive text-right" @focus="$event.target.select()">
                                     </div>
                                     <div class="col-1 pr-0 pl-0">
-                                        <i class="material-icons mt-1 i-btn" v-on:click="removePerson(index)">remove_circle_outline</i>
+                                        <i class="material-icons mt-1 i-btn" v-on:click="removePayPerson(index)">remove_circle_outline</i>
                                     </div>
                                 </div>
                             </li>
@@ -82,27 +72,39 @@
             <div class="row">
                 <div class="col">
                     <div class="row pr-4 pl-4 list-titles">
-                        <div class="col-1"></div>
-                        <div class="col-7">Nombre</div>
-                        <div class="col-3 text-right">Debe</div>
-                        <div class="col-1"></div>
+                        <div class="col-7 pl-0 pr-0">Nombre</div>
+                        <div class="col-4 pl-2 pr-2 text-right">Debe</div>
+                        <div class="col-1 pl-2 pr-2"></div>
                     </div>
-                    <!-- QUIEN PAGÓ LIST -->
+                    <!-- QUIEN ESTÁ LIST -->
                     <ul class="list-group">
                         <transition-group name="quien-pago-list" enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft">
                             <li class="list-group-item" v-for="(persona, index) in quienesPagaron" :key="persona" v-on:click="persona.showDetails = !persona.showDetails">
                                 <div class="row">
-                                    <div class="col-1">
-                                        <i class="material-icons mt-1">face</i>
-                                    </div>
-                                    <div class="col-7">
+                                    <div class="col-7 pl-2 pr-2">
                                         {{ persona.name }}
                                     </div>
-                                    <div class="col-3 currency currency-positive text-right">
+                                    <div class="col-4 pl-2 pr-2 currency currency-positive text-right">
                                         {{ persona.total }}
                                     </div>
                                     <div class="col-1 pr-0 pl-0">
-                                        <i class="material-icons mt-1 i-btn" v-on:click="removePerson(index)">remove_circle_outline</i>
+                                        <i class="material-icons mt-1 i-btn">block</i>
+                                    </div>
+                                </div>
+                                <div class="row" v-if="persona.showDetails">
+                                    Details
+                                </div>
+                            </li>
+                            <li class="list-group-item" v-for="(persona, index) in quienesNoPagaron" :key="persona + 100" v-on:click="persona.showDetails = !persona.showDetails">
+                                <div class="row">
+                                    <div class="col-7 pl-2 pr-2">
+                                        {{ persona.name }}
+                                    </div>
+                                    <div class="col-4 pl-2 pr-2 currency currency-positive text-right">
+                                        {{ persona.total }}
+                                    </div>
+                                    <div class="col-1 pr-0 pl-0">
+                                        <i class="material-icons mt-1 i-btn" v-on:click="removeNoPayPerson(index)">remove_circle_outline</i>
                                     </div>
                                 </div>
                                 <div class="row" v-if="persona.showDetails">
@@ -111,10 +113,10 @@
                             </li>
                         </transition-group>
                     </ul>
-                    <!-- END QUIEN PAGÓ LIST -->
+                    <!-- END QUIEN ESTÁ LIST -->
                     <div class="row">
                         <div class="col">
-                            <button class="btn btn-primary mt-2" v-on:click="addPayPerson">
+                            <button class="btn btn-primary mt-2" v-on:click="addNoPayPerson">
                                 <i class="material-icons align-middle">add_circle_outline</i>
                                 Agregar
                             </button>

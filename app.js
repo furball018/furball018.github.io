@@ -1,42 +1,56 @@
 var app = new Vue({
     el: '#app',
     data:{
-        quienesPagaron:[
-            {
-                name: 'Mati',
-                type: 'bebida',
-                total: 130,
-                showDetails: false
-            },
-            {
-                name: 'Lichi',
-                type: 'carne',
-                total: 500,
-                showDetails: false
-            },
-            {
-                name: 'Eve',
-                type: 'snacks',
-                total: 210,
-                showDetails: false
-            }
+        types: [
+            'bebida',
+            'alcohol',
+            'comida',
+            'carne',
+            'verduras',
+            'snacks',
+            'entradas',
+            'transporte',
+            'otrxs'
         ],
+        usedTypes: [],
+        quienesPagaron:[],
+        quienesNoPagaron:[],
         results:{
             total: 0
         }
     },
     methods:{
-        removePerson: function(index){
+        removePayPerson: function(index){
             this.quienesPagaron.splice(index,1);
+        },
+        removeNoPayPerson: function(index){
+            this.quienesNoPagaron.splice(index,1);
         },
         addPayPerson: function(){
             this.quienesPagaron.push({
                 name: 'Nombre',
                 type: 'select',
                 total: 0,
-                showDetails: false
+                showDetails: false,
+                exclude: []
+            });
+        },
+        addNoPayPerson: function(){
+            this.quienesNoPagaron.push({
+                name: 'Nombre',
+                type: 'select',
+                total: 0,
+                showDetails: false,
+                exclude: []
+            });
+        },
+        calcUsedTypes: function(){
+            this.usedTypes = [];
+            this.quienesPagaron.forEach(person => {
+                this.usedTypes.push(person.type);
             });
         }
+        
     },
     computed:{
         calcTotal: function(){
