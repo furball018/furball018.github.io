@@ -1,0 +1,97 @@
+/* webkit fixes*/
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
+
+/* Cambios al Bootstrap */
+.list-group-item:first-child {
+    border-top-left-radius: .7rem !important;
+    border-top-right-radius: .7rem !important;
+}
+.list-group-item:last-child {
+    border-bottom-left-radius: .7rem !important;
+    border-bottom-right-radius: .7rem !important;
+}
+.list-group-item{
+    background-color: #192a56 !important;
+    border: none;
+    font-size: 1.3em;
+    margin-top: 5px !important;
+}
+input{
+    background-color: transparent;
+    color: white;
+    border: none;
+    width: 100%;
+}
+select{
+    background-color: transparent;
+    border: none;
+    color: white;
+    width: 100%;
+    font-size: 0.7em;
+    height: 33px;
+}
+option{
+    color: black;
+}
+.btn{
+    width: 100%;
+    border-radius: .7rem !important;
+    font-size: 1.3em;
+    box-shadow: 0 2px 40px 0 rgba(0, 0, 0, 0.2);
+}
+.btn-primary{
+    background-color: #2f487f !important;
+    border: none;
+}
+/* -------------------- */
+.quien-pago-list-move {
+    transition: transform 0.5s;
+}
+
+html, body{
+    font-family: regulator-nova, sans-serif;
+    color: white;
+    background-color: #273c75;
+}
+
+.currency{
+    font-weight: 700;
+}
+
+.i-btn{
+    cursor: pointer;
+    color: #2f487f !important;
+}
+i-btn:hover{
+    color: #6181c7 !important;
+}
+
+.currency-positive{
+    color: #0088ff;
+}
+
+.currency-negative{
+    color: #ff7b3f;
+}
+
+.currency-total{
+    color: #47d400;
+}
+
+.title-bar{
+    background-color: #192a56 !important;
+}
+
+.list-titles{
+    color: #192a56;
+    font-weight: 700;
+}
+

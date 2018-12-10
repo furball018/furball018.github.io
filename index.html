@@ -1,0 +1,129 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hagamos Números</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://use.typekit.net/rnt3ejv.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+</head>
+<body>
+    <div id="app">
+        <div class="container-fluid title-bar">
+            <h3 class="text-center pb-3 pt-3">Hagamos Números</h3>
+        </div>
+        <div class="container quien-pago">
+            <h2 class="text-center mt-4">Quién pagó?</h2>
+            <div class="row">
+                <div class="col">
+                    <div class="row pr-4 pl-4 list-titles">
+                        <div class="col-1"></div>
+                        <div class="col-4">Nombre</div>
+                        <div class="col-4">Puso para</div>
+                        <div class="col-2 text-right">Gastó</div>
+                        <div class="col-1"></div>
+
+                    </div>
+                    <!-- QUIEN PAGÓ LIST -->
+                    <ul class="list-group">
+                        <transition-group name="quien-pago-list" enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft">
+                            <li class="list-group-item" v-for="(persona, index) in quienesPagaron" :key="persona">
+                                <div class="row">
+                                    <div class="col-1">
+                                        <i class="material-icons mt-1">face</i>
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="text" v-model="persona.name">
+                                    </div>
+                                    <div class="col-4">
+                                        <select name="type" v-model="persona.type">
+                                            <option value="select" disabled>Seleccionar</option>
+                                            <option value="bebida">Bebida</option>
+                                            <option value="alcohol">Alcohol</option>
+                                            <option value="comida">Comida</option>
+                                            <option value="snacks">Snacks</option>
+                                            <option value="carne">Carne</option>
+                                            <option value="entradas">Entradas</option>
+                                            <option value="transporte">Transporte</option>
+                                            <option value="otra-cosa">Otra cosa</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-2">
+                                        <input type="number" min="0" v-model.number="persona.total" class="currency currency-positive text-right">
+                                    </div>
+                                    <div class="col-1 pr-0 pl-0">
+                                        <i class="material-icons mt-1 i-btn" v-on:click="removePerson(index)">remove_circle_outline</i>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item text-right pt-1 pb-1" key="999">Total <span class="currency currency-total ml-2">${{calcTotal}}</span></li>
+                        </transition-group>
+                    </ul>
+                    <!-- END QUIEN PAGÓ LIST -->
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn btn-primary mt-2" v-on:click="addPayPerson">
+                                <i class="material-icons align-middle">add_circle_outline</i>
+                                Agregar
+                            </button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="container quien-esta">
+            <h2 class="text-center mt-4">Quiénes están?</h2>
+            <div class="row">
+                <div class="col">
+                    <div class="row pr-4 pl-4 list-titles">
+                        <div class="col-1"></div>
+                        <div class="col-7">Nombre</div>
+                        <div class="col-3 text-right">Debe</div>
+                        <div class="col-1"></div>
+                    </div>
+                    <!-- QUIEN PAGÓ LIST -->
+                    <ul class="list-group">
+                        <transition-group name="quien-pago-list" enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft">
+                            <li class="list-group-item" v-for="(persona, index) in quienesPagaron" :key="persona" v-on:click="persona.showDetails = !persona.showDetails">
+                                <div class="row">
+                                    <div class="col-1">
+                                        <i class="material-icons mt-1">face</i>
+                                    </div>
+                                    <div class="col-7">
+                                        {{ persona.name }}
+                                    </div>
+                                    <div class="col-3 currency currency-positive text-right">
+                                        {{ persona.total }}
+                                    </div>
+                                    <div class="col-1 pr-0 pl-0">
+                                        <i class="material-icons mt-1 i-btn" v-on:click="removePerson(index)">remove_circle_outline</i>
+                                    </div>
+                                </div>
+                                <div class="row" v-if="persona.showDetails">
+                                    Details
+                                </div>
+                            </li>
+                        </transition-group>
+                    </ul>
+                    <!-- END QUIEN PAGÓ LIST -->
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn btn-primary mt-2" v-on:click="addPayPerson">
+                                <i class="material-icons align-middle">add_circle_outline</i>
+                                Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
