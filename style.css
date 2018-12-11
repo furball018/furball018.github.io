@@ -95,3 +95,9 @@ i-btn:hover{
     font-weight: 700;
 }
 
+.type-toggle{
+    font-size: 0.8em !important;
+    background-color: #6181c7;
+    border-radius: 100px;
+}
+

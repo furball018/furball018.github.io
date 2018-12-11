@@ -31,7 +31,7 @@
                     <!-- QUIEN PAGÓ LIST -->
                     <ul class="list-group">
                         <transition-group name="quien-pago-list" enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft">
-                            <li class="list-group-item" v-for="(persona, index) in quienesPagaron" :key="persona">
+                            <li class="list-group-item pt-1 pb-1" v-for="(persona, index) in quienesPagaron" :key="persona">
                                 <div class="row">
                                     <div class="col-4 pl-2 pr-2">
                                         <input type="text" v-model="persona.name" @focus="$event.target.select()">
@@ -60,7 +60,6 @@
                                 <i class="material-icons align-middle">add_circle_outline</i>
                                 Agregar
                             </button>
-
                         </div>
                     </div>
 
@@ -79,13 +78,16 @@
                     <!-- QUIEN ESTÁ LIST -->
                     <ul class="list-group">
                         <transition-group name="quien-pago-list" enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft">
-                            <li class="list-group-item" v-for="(persona, index) in quienesPagaron" :key="persona" v-on:click="persona.showDetails = !persona.showDetails">
+                            <li class="list-group-item pb-1 pt-1" v-for="(persona, index) in quienesPagaron" :key="persona">
                                 <div class="row">
-                                    <div class="col-7 pl-2 pr-2">
+                                    <div class="col-1 pr-0 pl-0">
+                                        <i class="material-icons mt-1 i-btn" v-on:click="persona.showDetails = !persona.showDetails">menu</i>
+                                    </div>
+                                    <div class="col-6 pl-2 pr-2">
                                         {{ persona.name }}
                                     </div>
                                     <div class="col-4 pl-2 pr-2 currency currency-positive text-right">
-                                        {{ persona.total }}
+                                        {{ persona.debt }}
                                     </div>
                                     <div class="col-1 pr-0 pl-0">
                                         <i class="material-icons mt-1 i-btn">block</i>
@@ -95,20 +97,26 @@
                                     Details
                                 </div>
                             </li>
-                            <li class="list-group-item" v-for="(persona, index) in quienesNoPagaron" :key="persona + 100" v-on:click="persona.showDetails = !persona.showDetails">
+                            <li class="list-group-item pb-1 pt-1" v-for="(persona, index) in quienesNoPagaron" :key="persona">
                                 <div class="row">
-                                    <div class="col-7 pl-2 pr-2">
-                                        {{ persona.name }}
+                                    <div class="col-1 pr-0 pl-0">
+                                        <i class="material-icons mt-1 i-btn" v-on:click="persona.showDetails = !persona.showDetails">menu</i>
+                                    </div>
+                                    <div class="col-6 pl-2 pr-2">
+                                        <input type="text" v-model="persona.name" @focus="$event.target.select()">
                                     </div>
                                     <div class="col-4 pl-2 pr-2 currency currency-positive text-right">
-                                        {{ persona.total }}
+                                        {{ persona.debt }}
                                     </div>
                                     <div class="col-1 pr-0 pl-0">
                                         <i class="material-icons mt-1 i-btn" v-on:click="removeNoPayPerson(index)">remove_circle_outline</i>
                                     </div>
                                 </div>
-                                <div class="row" v-if="persona.showDetails">
-                                    Details
+                                <div class="row pt-2" v-if="persona.showDetails">
+                                    <div class="col-1"></div>
+                                    <div class="type-toggle mr-2 mb-2 pl-3 pr-3" v-for="type in usedTypes" v-on:click="">
+                                        {{ type }}
+                                    </div>
                                 </div>
                             </li>
                         </transition-group>
