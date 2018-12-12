@@ -28,8 +28,8 @@ var app = new Vue({
         },
         addPayPerson: function(){
             this.quienesPagaron.push({
-                name: 'Nombre',
-                type: 'select',
+                name: '',
+                type: '',
                 total: 0,
                 debt: 0,
                 showDetails: false,
@@ -38,7 +38,7 @@ var app = new Vue({
         },
         addNoPayPerson: function(){
             this.quienesNoPagaron.push({
-                name: 'Nombre',
+                name: '',
                 debt: 0,
                 showDetails: false,
                 exclude: []
@@ -47,9 +47,7 @@ var app = new Vue({
         calcUsedTypes: function(){
             this.usedTypes = [];
             this.quienesPagaron.forEach(person => {
-                if (person.type != 'select') {
-                    this.usedTypes.push(person.type);
-                }
+                this.usedTypes.push(person.type);
             });
         }
         

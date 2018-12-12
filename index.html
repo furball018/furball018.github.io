@@ -34,13 +34,16 @@
                             <li class="list-group-item pt-1 pb-1" v-for="(persona, index) in quienesPagaron" :key="persona">
                                 <div class="row">
                                     <div class="col-4 pl-2 pr-2">
-                                        <input type="text" v-model="persona.name" @focus="$event.target.select()">
+                                        <input type="text" v-model="persona.name" @focus="$event.target.select()" placeholder="Nombre...">
                                     </div>
                                     <div class="col-4 pl-2 pr-2">
+                                        <input type="text" v-model="persona.type" @change.lazy="calcUsedTypes" @focus="$event.target.select()" placeholder="Tipo..." class="type-input pl-2 pr-2 align-middle">
+                                        <!--
                                         <select name="type" v-model="persona.type" @change="calcUsedTypes">
                                                 <option value="select" disabled>Elegir</option>
                                                 <option v-for="type in types" :value="type">{{type}}</option>
                                         </select>
+                                        -->
                                     </div>
                                     <div class="col-3 pl-2 pr-2">
                                         <input type="number" min="0" v-model.number="persona.total" class="currency currency-positive text-right" @focus="$event.target.select()">
@@ -103,7 +106,7 @@
                                         <i class="material-icons mt-1 i-btn" v-on:click="persona.showDetails = !persona.showDetails">menu</i>
                                     </div>
                                     <div class="col-6 pl-2 pr-2">
-                                        <input type="text" v-model="persona.name" @focus="$event.target.select()">
+                                        <input type="text" v-model="persona.name" @focus="$event.target.select()" placeholder="Nombre...">
                                     </div>
                                     <div class="col-4 pl-2 pr-2 currency currency-positive text-right">
                                         {{ persona.debt }}
@@ -112,8 +115,7 @@
                                         <i class="material-icons mt-1 i-btn" v-on:click="removeNoPayPerson(index)">remove_circle_outline</i>
                                     </div>
                                 </div>
-                                <div class="row pt-2" v-if="persona.showDetails">
-                                    <div class="col-1"></div>
+                                <div class="row pt-2 pr-4 pl-4" v-if="persona.showDetails">
                                     <div class="type-toggle mr-2 mb-2 pl-3 pr-3" v-for="type in usedTypes" v-on:click="">
                                         {{ type }}
                                     </div>
